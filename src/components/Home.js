@@ -1,33 +1,46 @@
 import React, { useEffect, useState } from "react";
-import AppNavbar from "./AppNavbar";
 import { Container } from "reactstrap";
+import AppNavbar from "./AppNavbar";
+import User from "./User";
+import Courses from "./Courses";
+import Certifications from "./Certifications";
+import Educations from "./Educations";
+import Experiences from "./Experiences";
+
+const fetchURL = "http://localhost:8080/api/resume/default";
+const getItems = () => fetch(fetchURL).then((res) => res.json());
 
 const Home = () => {
-  const [resume, setResume] = useState([]);
+  const [user, setUser] = useState({});
+  const [courses, setCourses] = useState({});
+  const [certifications, setCertifications] = useState({});
+  const [educations, setEducations] = useState({});
+  const [experiences, setExperiences] = useState({});
 
   useEffect(() => {
-    getDefaultResume();
-  });
-
-  async function getDefaultResume() {
-    const response = await fetch("/api/resume/default");
-    const data = await response.json();
-    setResume(data);
-    console.log(resume);
-  }
+    getItems().then((data) => {
+      setUser(data.user);
+      setCourses(data.courses);
+      setCertifications(data.certifications);
+      setEducations(data.educations);
+      setExperiences(data.experiences);
+    });
+  }, []);
 
   return (
     <div>
       <AppNavbar />
       <br />
       <Container fluid className="container">
-        <p>
-          Name: {resume && resume.user.fullName} <br />
-          Email: {resume && resume.user.email} <br />
-          Title: {resume && resume.user.title} <br />
-          Birth Date: {resume && resume.user.birthDate} <br />
-          Phone: {resume && resume.user.phone}
-        </p>
+        <User data={user} />
+        <br />
+        <Courses data={courses} />
+        <br />
+        <Certifications data={certifications} />
+        <br />
+        <Educations data={educations} />
+        <br />
+        <Experiences data={experiences} />
       </Container>
     </div>
   );
