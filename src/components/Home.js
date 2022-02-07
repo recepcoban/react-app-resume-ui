@@ -7,7 +7,7 @@ import Certifications from "./Certifications";
 import Educations from "./Educations";
 import Experiences from "./Experiences";
 
-const fetchURL = "http://localhost:8080/api/resume/default";
+const fetchURL = "/api/resume/default";
 const getItems = () => fetch(fetchURL).then((res) => res.json());
 
 const Home = () => {
