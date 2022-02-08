@@ -1,6 +1,5 @@
 {
   "name": "react-app-resume-ui",
-  "proxy": "https://spring-boot-resume-api.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
