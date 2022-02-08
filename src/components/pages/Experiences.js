@@ -1,15 +1,17 @@
 import React from "react";
 import { Table } from "reactstrap";
 
-const Courses = (props) => {
+export default function Experiences(props) {
   return (
     <div>
       <Table bordered striped>
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Provider</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Employer</th>
+            <th>Position</th>
           </tr>
         </thead>
         <tbody>
@@ -19,8 +21,10 @@ const Courses = (props) => {
               return (
                 <tr key={item.id}>
                   <th scope="row">{item.id}</th>
-                  <td>{item.name}</td>
-                  <td>{item.provider}</td>
+                  <td>{item.startDate}</td>
+                  <td>{item.endDate}</td>
+                  <td>{item.employer}</td>
+                  <td>{item.position}</td>
                 </tr>
               );
             })}
@@ -28,6 +32,4 @@ const Courses = (props) => {
       </Table>
     </div>
   );
-};
-
-export default Courses;
+}

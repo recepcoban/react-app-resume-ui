@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardTitle, CardSubtitle, CardText } from "reactstrap";
 
-const User = (props) => {
+export default function User(props) {
   return (
     <div>
       <Card color="light">
@@ -15,6 +15,4 @@ const User = (props) => {
       </Card>
     </div>
   );
-};
-
-export default User;
+}

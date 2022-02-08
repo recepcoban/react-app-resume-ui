@@ -11,7 +11,7 @@ import {
   NavbarText,
 } from "reactstrap";
 
-const AppNavbar = () => {
+export default function AppNavbar() {
   return (
     <Navbar color="dark" dark expand="md">
       <Collapse navbar className="container">
@@ -35,6 +35,4 @@ const AppNavbar = () => {
       </Collapse>
     </Navbar>
   );
-};
-
-export default AppNavbar;
+}

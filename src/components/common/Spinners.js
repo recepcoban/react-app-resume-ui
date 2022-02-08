@@ -1,7 +1,7 @@
 import React from "react";
 import { Spinner } from "reactstrap";
 
-const Spinners = () => {
+export default function Spinners() {
   const spin = [
     "primary",
     "secondary",
@@ -23,6 +23,4 @@ const Spinners = () => {
       })}
     </div>
   );
-};
-
-export default Spinners;
+}

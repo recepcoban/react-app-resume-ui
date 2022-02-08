@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 
-const Certifications = (props) => {
+export default function Courses(props) {
   return (
     <div>
       <Table bordered striped>
@@ -10,7 +10,6 @@ const Certifications = (props) => {
             <th>#</th>
             <th>Name</th>
             <th>Provider</th>
-            <th>URL</th>
           </tr>
         </thead>
         <tbody>
@@ -22,7 +21,6 @@ const Certifications = (props) => {
                   <th scope="row">{item.id}</th>
                   <td>{item.name}</td>
                   <td>{item.provider}</td>
-                  <td>{item.url}</td>
                 </tr>
               );
             })}
@@ -30,6 +28,4 @@ const Certifications = (props) => {
       </Table>
     </div>
   );
-};
-
-export default Certifications;
+}

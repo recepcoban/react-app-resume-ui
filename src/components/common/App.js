@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "../pages/Home";
 
-const App = () => {
+export default function App() {
   return (
     <Router>
       <Switch>
@@ -10,6 +10,4 @@ const App = () => {
       </Switch>
     </Router>
   );
-};
-
-export default App;
+}

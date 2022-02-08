@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 
-const Educations = (props) => {
+export default function Educations(props) {
   return (
     <div>
       <Table bordered striped>
@@ -32,6 +32,4 @@ const Educations = (props) => {
       </Table>
     </div>
   );
-};
-
-export default Educations;
+}

@@ -4,7 +4,8 @@ React App Resume UI is using [Spring Boot Resume API](https://github.com/recepco
 
 **Tech Stack**
 
-- React Js
+- React JS
+- Axios API
 - Bootstrap
 - Reactstrap
 - React Router
