@@ -1,7 +1,7 @@
 {
   "name": "react-app-resume-ui",
-  "version": "1.0.0",
   "description": "React App Resume UI",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "axios": "0.25.0",

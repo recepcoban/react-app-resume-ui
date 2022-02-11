@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "reactstrap";
-import axios from "axios";
 import AppNavbar from "../common/AppNavbar";
 import Spinners from "../common/Spinners";
 import User from "./User";
@@ -8,8 +7,8 @@ import Courses from "./Courses";
 import Certifications from "./Certifications";
 import Educations from "./Educations";
 import Experiences from "./Experiences";
-
-const URL = "https://spring-boot-resume-api.herokuapp.com/api/resume/default";
+import getDefaultResume from "../api/ResumeApi";
+import ErrorAlert from "../common/ErrorAlert";
 
 export default function Home() {
   const [resumeData, setResumeData] = useState(null);
@@ -21,21 +20,16 @@ export default function Home() {
   }, []);
 
   async function getResumeData() {
-    await axios
-      .get(URL)
-      .then((response) => {
-        setResumeData(response.data);
-        setError(null);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        setResumeData(null);
-        setError(error.response.data.message);
-        console.log(error.response.data.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    const defaultResumeResponse = await getDefaultResume();
+    if (!defaultResumeResponse.isAxiosError) {
+      setResumeData(defaultResumeResponse.data);
+      setError(null);
+    } else {
+      setResumeData(null);
+      setError(defaultResumeResponse.response.data.message);
+    }
+
+    setLoading(false);
   }
 
   return (
@@ -44,7 +38,7 @@ export default function Home() {
       <br />
       <Container fluid className="container">
         {loading && <Spinners />}
-        {error && error.code + " - " + error.text}
+        {error && <ErrorAlert error={error} />}
         {resumeData && resumeData.user && (
           <div>
             <User data={resumeData.user} />
