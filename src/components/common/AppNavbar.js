@@ -15,7 +15,15 @@ export default function AppNavbar() {
   return (
     <Navbar color="dark" dark expand="md">
       <Collapse navbar className="container">
-        <NavbarBrand href="/">Home</NavbarBrand>
+        <NavbarBrand href="/">
+          <img
+            alt="app logo"
+            src="/favicon.ico"
+            width="30"
+            className="d-inline-block align-top"
+          />{" "}
+          Home
+        </NavbarBrand>
         <Nav className="me-auto" navbar>
           <UncontrolledDropdown inNavbar nav>
             <DropdownToggle caret nav>

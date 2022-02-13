@@ -32,10 +32,11 @@ export default function Home() {
   const [resumeData, setResumeData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOpenSearchModal, setIsOpenSearchModal] = useState(false);
 
   useEffect(() => {
     getResumeData();
-  }, []);
+  }, [email]);
 
   async function getResumeData() {
     const resumeResponse = await getResume(email);
@@ -50,18 +51,10 @@ export default function Home() {
     setLoading(false);
   }
 
-  const [isOpen, setIsOpen] = useState(false);
-  const searchModal = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const setEmailAddress = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const getResumeDataByEmail = () => {
-    setIsOpen(!isOpen);
-    getResumeData();
+  const getResumeDataByEmail = (e) => {
+    e.preventDefault();
+    setEmail(e.target.email.value);
+    setIsOpenSearchModal(!isOpenSearchModal);
   };
 
   return (
@@ -72,14 +65,18 @@ export default function Home() {
         {loading && <Spinners />}
         {error && <ErrorAlert error={error} />}
         <div className="text-end">
-          <Button outline color="info" onClick={searchModal}>
+          <Button
+            outline
+            color="info"
+            onClick={() => setIsOpenSearchModal(!isOpenSearchModal)}
+          >
             Already have a resume? check it with your email!
           </Button>
         </div>
         <hr />
         {resumeData && resumeData.user && (
           <div>
-            <User data={resumeData.user} />
+            <User data={resumeData.user} userCallback={setEmail} />
             <br />
             <SocialMedias data={resumeData.socialMedias} />
             <br />
@@ -102,10 +99,13 @@ export default function Home() {
         )}
       </Container>
       <div>
-        <Modal isOpen={isOpen} toggle={searchModal}>
-          <ModalHeader>Already have a resume?</ModalHeader>
-          <ModalBody>
-            <Form>
+        <Modal
+          isOpen={isOpenSearchModal}
+          toggle={() => setIsOpenSearchModal(!isOpenSearchModal)}
+        >
+          <Form onSubmit={getResumeDataByEmail}>
+            <ModalHeader>Already have a resume?</ModalHeader>
+            <ModalBody>
               <FormGroup row>
                 <Label for="email">Email</Label>
                 <Col>
@@ -114,20 +114,20 @@ export default function Home() {
                     name="email"
                     placeholder="Type a valid email..."
                     type="email"
-                    onChange={setEmailAddress}
                   />
                 </Col>
               </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="success" onClick={getResumeDataByEmail}>
-              Search
-            </Button>
-            <Button color="danger" onClick={searchModal}>
-              Cancel
-            </Button>
-          </ModalFooter>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="success">Search</Button>
+              <Button
+                color="danger"
+                onClick={() => setIsOpenSearchModal(!isOpenSearchModal)}
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Form>
         </Modal>
       </div>
     </div>
