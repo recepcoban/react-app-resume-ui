@@ -1,35 +1,32 @@
 import React from "react";
-import { Table } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 export default function Educations(props) {
   return (
     <div>
-      <Table bordered striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>School</th>
-            <th>Department</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data &&
-            props.data.length > 0 &&
-            props.data.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <th scope="row">{item.id}</th>
-                  <td>{item.startYear}</td>
-                  <td>{item.endYear}</td>
-                  <td>{item.schoolName}</td>
-                  <td>{item.departmentName}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <Container>
+        <h4>Education</h4>
+        {props.data &&
+          props.data.length > 0 &&
+          props.data.map((item) => {
+            return (
+              <Row key={item.id}>
+                <Col>
+                  <div>
+                    {item.schoolName}
+                    {" - "}
+                    <span className="text-muted">{item.departmentName}</span>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="text-end">
+                    {item.startYear} - {item.endYear}
+                  </div>
+                </Col>
+              </Row>
+            );
+          })}
+      </Container>
     </div>
   );
 }

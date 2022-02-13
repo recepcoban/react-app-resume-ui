@@ -77,23 +77,23 @@ export default function Home() {
         {resumeData && resumeData.user && (
           <div>
             <User data={resumeData.user} userCallback={setEmail} />
-            <br />
+            <hr />
             <SocialMedias data={resumeData.socialMedias} />
-            <br />
+            <hr />
             <Educations data={resumeData.educations} />
-            <br />
+            <hr />
             <Experiences data={resumeData.experiences} />
-            <br />
+            <hr />
             <Skills data={resumeData.skills} />
-            <br />
+            <hr />
             <Languages data={resumeData.languages} />
-            <br />
+            <hr />
             <Certifications data={resumeData.certifications} />
-            <br />
+            <hr />
             <Courses data={resumeData.courses} />
-            <br />
+            <hr />
             <Projects data={resumeData.projects} />
-            <br />
+            <hr />
             <Hobbies data={resumeData.hobbies} />
           </div>
         )}

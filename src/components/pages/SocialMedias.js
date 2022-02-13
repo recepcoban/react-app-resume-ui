@@ -1,31 +1,38 @@
 import React from "react";
-import { Table } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 export default function SocialMedias(props) {
+  const getIcon = (type) => {
+    switch (type) {
+      case "LINKEDIN":
+      case "SKYPE":
+      case "FACEBOOK":
+      case "GITHUB":
+      case "INSTAGRAM":
+      case "TWITTER":
+      case "YOUTUBE":
+        return "bi bi-" + type.toLowerCase();
+      default:
+        return "bi bi-file-code-fill";
+    }
+  };
+
   return (
     <div>
-      <Table bordered striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Type</th>
-            <th>URL</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data &&
-            props.data.length > 0 &&
-            props.data.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <th scope="row">{item.id}</th>
-                  <td>{item.type}</td>
-                  <td>{item.url}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <Container>
+        <h4>Social Media</h4>
+        {props.data &&
+          props.data.length > 0 &&
+          props.data.map((item) => {
+            return (
+              <Row key={item.id}>
+                <Col>
+                  <i className={getIcon(item.type)}></i> {item.url}
+                </Col>
+              </Row>
+            );
+          })}
+      </Container>
     </div>
   );
 }

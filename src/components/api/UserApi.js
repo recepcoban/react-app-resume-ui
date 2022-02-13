@@ -7,6 +7,7 @@ export default async function createUser(user) {
       email: user.email,
       fullName: user.fullName,
       title: user.title,
+      employer: user.employer,
       birthDate: user.birthDate,
       phone: user.phone,
       location: user.location,

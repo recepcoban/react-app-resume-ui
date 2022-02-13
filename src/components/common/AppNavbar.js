@@ -4,6 +4,7 @@ import {
   NavbarBrand,
   Collapse,
   Nav,
+  Media,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -16,10 +17,10 @@ export default function AppNavbar() {
     <Navbar color="dark" dark expand="md">
       <Collapse navbar className="container">
         <NavbarBrand href="/">
-          <img
-            alt="app logo"
-            src="/favicon.ico"
+          <Media
+            src="./images/favicon.ico"
             width="30"
+            alt="app logo"
             className="d-inline-block align-top"
           />{" "}
           Home
