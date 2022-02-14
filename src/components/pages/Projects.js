@@ -1,33 +1,30 @@
 import React from "react";
-import { Table } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 export default function Projects(props) {
   return (
     <div>
-      <Table bordered striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>URL</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data &&
-            props.data.length > 0 &&
-            props.data.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <th scope="row">{item.id}</th>
-                  <td>{item.name}</td>
-                  <td>{item.url}</td>
-                  <td>{item.details}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <Container>
+        <h4>Projects</h4>
+        {props.data &&
+          props.data.length > 0 &&
+          props.data.map((item) => {
+            return (
+              <Row key={item.id}>
+                <Col>
+                  <div>
+                    <strong>{item.name}</strong>
+                  </div>
+                  <div>{item.details}</div>
+                  <div className="invisible">{item.userId}</div>
+                </Col>
+                <Col>
+                  <div className="text-muted text-end">{item.url}</div>
+                </Col>
+              </Row>
+            );
+          })}
+      </Container>
     </div>
   );
 }

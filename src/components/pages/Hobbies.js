@@ -1,29 +1,26 @@
 import React from "react";
-import { Table } from "reactstrap";
+import { Container, Row, Col, Badge } from "reactstrap";
 
 export default function Hobbies(props) {
   return (
     <div>
-      <Table bordered striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Container>
+        <h4>Hobbies</h4>
+        <Row>
           {props.data &&
             props.data.length > 0 &&
             props.data.map((item) => {
               return (
-                <tr key={item.id}>
-                  <th scope="row">{item.id}</th>
-                  <td>{item.name}</td>
-                </tr>
+                <Col key={item.id} className="text-center">
+                  <span className="badge rounded-pill bg-secondary text-light">
+                    {item.name}
+                  </span>
+                </Col>
               );
             })}
-        </tbody>
-      </Table>
+        </Row>
+        <br />
+      </Container>
     </div>
   );
 }

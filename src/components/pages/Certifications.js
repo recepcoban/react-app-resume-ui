@@ -1,33 +1,30 @@
 import React from "react";
-import { Table } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 export default function Certifications(props) {
   return (
     <div>
-      <Table bordered striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Provider</th>
-            <th>URL</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data &&
-            props.data.length > 0 &&
-            props.data.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <th scope="row">{item.id}</th>
-                  <td>{item.name}</td>
-                  <td>{item.provider}</td>
-                  <td>{item.url}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <Container>
+        <h4>Certifications</h4>
+        {props.data &&
+          props.data.length > 0 &&
+          props.data.map((item) => {
+            return (
+              <Row key={item.id}>
+                <Col>
+                  <div>{item.name}</div>
+                  <div className="text-muted">{item.provider}</div>
+                  <div className="invisible">{item.userId}</div>
+                </Col>
+                <Col>
+                  <div className="text-muted text-end">
+                    <i>{item.url}</i>
+                  </div>
+                </Col>
+              </Row>
+            );
+          })}
+      </Container>
     </div>
   );
 }

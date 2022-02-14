@@ -5,7 +5,7 @@ export default function Educations(props) {
   return (
     <div>
       <Container>
-        <h4>Education</h4>
+        <h4>Educations</h4>
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {
@@ -19,7 +19,7 @@ export default function Educations(props) {
                   </div>
                 </Col>
                 <Col>
-                  <div className="text-end">
+                  <div className="text-muted text-end">
                     {item.startYear} - {item.endYear}
                   </div>
                 </Col>

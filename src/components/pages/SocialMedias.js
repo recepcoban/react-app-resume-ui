@@ -20,7 +20,7 @@ export default function SocialMedias(props) {
   return (
     <div>
       <Container>
-        <h4>Social Media</h4>
+        <h4>Social Medias</h4>
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {

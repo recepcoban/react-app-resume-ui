@@ -1,31 +1,45 @@
 import React from "react";
-import { Table } from "reactstrap";
+import { Container, Row, Col, Progress } from "reactstrap";
 
 export default function Skills(props) {
+  const getLevel = (level) => {
+    switch (level) {
+      case "BEGINNER":
+        return 20;
+      case "ELEMENTARY":
+        return 40;
+      case "INTERMEDIATE":
+        return 60;
+      case "UPPER_INTERMEDIATE":
+        return 80;
+      case "ADVANCED":
+        return 90;
+      case "PROFICIENT":
+        return 100;
+      default:
+        return 100;
+    }
+  };
+
   return (
     <div>
-      <Table bordered striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Level</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data &&
-            props.data.length > 0 &&
-            props.data.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <th scope="row">{item.id}</th>
-                  <td>{item.name}</td>
-                  <td>{item.level}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <Container>
+        <h4>Skills</h4>
+        {props.data &&
+          props.data.length > 0 &&
+          props.data.map((item) => {
+            return (
+              <Row key={item.id}>
+                <Col>
+                  <div>{item.name}</div>
+                </Col>
+                <Col>
+                  <Progress color="info" value={getLevel(item.level)} />
+                </Col>
+              </Row>
+            );
+          })}
+      </Container>
     </div>
   );
 }
