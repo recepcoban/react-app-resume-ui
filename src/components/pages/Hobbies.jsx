@@ -1,11 +1,11 @@
 import React from "react";
-import { Container, Row, Col, Badge } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 export default function Hobbies(props) {
   return (
     <div>
       <Container>
-        <h4>Hobbies</h4>
+        <h4>Hobby</h4>
         <Row>
           {props.data &&
             props.data.length > 0 &&

@@ -24,7 +24,7 @@ export default function Languages(props) {
   return (
     <div>
       <Container>
-        <h4>Languages</h4>
+        <h4>Language</h4>
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {

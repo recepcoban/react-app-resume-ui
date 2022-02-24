@@ -20,14 +20,17 @@ export default function SocialMedias(props) {
   return (
     <div>
       <Container>
-        <h4>Social Medias</h4>
+        <h4>Social Media</h4>
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {
             return (
               <Row key={item.id}>
                 <Col>
-                  <i className={getIcon(item.type)}></i> {item.url}
+                  <i className={getIcon(item.type)}></i>{" "}
+                  <a href={item.url} className="text-dark">
+                    {item.url}
+                  </a>
                 </Col>
               </Row>
             );

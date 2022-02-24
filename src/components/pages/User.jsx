@@ -98,7 +98,7 @@ export default function User(props) {
         <Row>
           <Col>
             <p></p>
-            <h4>Summary</h4>
+            <h5>Summary</h5>
             {props.data.summary}
           </Col>
         </Row>

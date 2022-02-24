@@ -5,7 +5,7 @@ export default function Experiences(props) {
   return (
     <div>
       <Container>
-        <h4>Experiences</h4>
+        <h4>Work Experience</h4>
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {
@@ -13,12 +13,12 @@ export default function Experiences(props) {
               <Row key={item.id}>
                 <Col>
                   <div>
-                    <strong>{item.employer}</strong>
+                    <h6>{item.employer}</h6>
                   </div>
                   <div className="text-muted">
                     <i>{item.position}</i>
                   </div>
-                  <div>{item.responsibilities}</div>
+                  <div className="text-muted">{item.responsibilities}</div>
                   <div className="invisible">{item.userId}</div>
                 </Col>
                 <Col>
@@ -29,11 +29,13 @@ export default function Experiences(props) {
                       //day: "2-digit",
                     }).format(new Date(item.startDate)) +
                       " - " +
-                      new Intl.DateTimeFormat("en-GB", {
-                        year: "numeric",
-                        month: "long",
-                        //day: "2-digit",
-                      }).format(new Date(item.endDate))}
+                      (item.active
+                        ? "Present"
+                        : new Intl.DateTimeFormat("en-GB", {
+                            year: "numeric",
+                            month: "long",
+                            //day: "2-digit",
+                          }).format(new Date(item.endDate)))}
                   </div>
                 </Col>
               </Row>
