@@ -12,7 +12,7 @@ import {
   NavbarText,
 } from "reactstrap";
 
-export default function AppNavbar() {
+export default function Navigation() {
   return (
     <Navbar color="dark" dark expand="md">
       <Collapse navbar className="container">

@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import {
   Button,
-  Col,
   Container,
   Form,
   FormGroup,
+  InputGroup,
   Input,
+  Row,
+  Col,
   Label,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
 } from "reactstrap";
-import AppNavbar from "../common/AppNavbar";
-import Spinners from "../common/Spinners";
-import User from "./User";
-import SocialMedias from "./SocialMedias";
-import Educations from "./Educations";
-import Experiences from "./Experiences";
-import Skills from "./Skills";
-import Languages from "./Languages";
-import Certifications from "./Certifications";
-import Courses from "./Courses";
-import Projects from "./Projects";
-import Hobbies from "./Hobbies";
 import getResume from "../api/ResumeApi";
-import ErrorAlert from "../common/ErrorAlert";
+import { Spinners, ErrorAlert } from "../common";
+import {
+  UserInfo,
+  SocialMediaInfo,
+  EducationInfo,
+  ExperienceInfo,
+  SkillInfo,
+  LanguageInfo,
+  CertificationInfo,
+  CourseInfo,
+  ProjectInfo,
+  HobbyInfo,
+} from "/";
 
 export default function Home() {
   const [email, setEmail] = useState(null);
   const [resumeData, setResumeData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isOpenSearchModal, setIsOpenSearchModal] = useState(false);
 
   useEffect(() => {
     getResumeData();
@@ -54,82 +52,73 @@ export default function Home() {
   const getResumeDataByEmail = (e) => {
     e.preventDefault();
     setEmail(e.target.email.value);
-    setIsOpenSearchModal(!isOpenSearchModal);
   };
 
   return (
-    <div>
-      <AppNavbar />
+    <Container fluid className="container">
+      <Row>
+        <Col>{loading && <Spinners />}</Col>
+      </Row>
+      <Row>
+        <Col>{error && <ErrorAlert error={error} />}</Col>
+      </Row>
       <br />
-      <Container fluid className="container">
-        {loading && <Spinners />}
-        {error && <ErrorAlert error={error} />}
-        <div className="text-end">
-          <Button
-            outline
-            color="info"
-            onClick={() => setIsOpenSearchModal(!isOpenSearchModal)}
-          >
-            Already have a resume? check it with your email!
-          </Button>
-        </div>
-        <hr />
-        {resumeData && resumeData.user && (
-          <div>
-            <User data={resumeData.user} userCallback={setEmail} />
-            <hr />
-            <SocialMedias data={resumeData.socialMedias} />
-            <hr />
-            <Educations data={resumeData.educations} />
-            <hr />
-            <Experiences data={resumeData.experiences} />
-            <hr />
-            <Skills data={resumeData.skills} />
-            <hr />
-            <Languages data={resumeData.languages} />
-            <hr />
-            <Certifications data={resumeData.certifications} />
-            <hr />
-            <Courses data={resumeData.courses} />
-            <hr />
-            <Projects data={resumeData.projects} />
-            <hr />
-            <Hobbies data={resumeData.hobbies} />
-          </div>
-        )}
-      </Container>
-      <div>
-        <Modal
-          isOpen={isOpenSearchModal}
-          toggle={() => setIsOpenSearchModal(!isOpenSearchModal)}
-        >
+      <Row>
+        <Col sm="9" md="8" lg="6">
           <Form onSubmit={getResumeDataByEmail}>
-            <ModalHeader>Already have a resume?</ModalHeader>
-            <ModalBody>
-              <FormGroup row>
-                <Label for="email">Email</Label>
-                <Col>
-                  <Input
-                    id="email"
-                    name="email"
-                    placeholder="Type a valid email..."
-                    type="email"
-                  />
-                </Col>
-              </FormGroup>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="success">Search</Button>
-              <Button
-                color="danger"
-                onClick={() => setIsOpenSearchModal(!isOpenSearchModal)}
-              >
-                Cancel
-              </Button>
-            </ModalFooter>
+            <FormGroup>
+              <Label for="email">
+                Already have a resume? check it with your email!
+              </Label>
+              <InputGroup>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="Type your valid email..."
+                  type="email"
+                />
+                <Button color="success">Search</Button>
+              </InputGroup>
+            </FormGroup>
           </Form>
-        </Modal>
-      </div>
-    </div>
+        </Col>
+        <Col sm="3" md="4" lg="6" className="text-end">
+          <br />
+          <NavLink to="/user">
+            <Button outline color="info">
+              New Resume
+            </Button>
+          </NavLink>
+        </Col>
+      </Row>
+      <hr />
+      <Row>
+        <Col>
+          {resumeData && resumeData.user && (
+            <div>
+              <UserInfo data={resumeData.user} />
+              <hr />
+              <SocialMediaInfo data={resumeData.socialMedias} />
+              <hr />
+              <EducationInfo data={resumeData.educations} />
+              <hr />
+              <ExperienceInfo data={resumeData.experiences} />
+              <hr />
+              <SkillInfo data={resumeData.skills} />
+              <hr />
+              <LanguageInfo data={resumeData.languages} />
+              <hr />
+              <CertificationInfo data={resumeData.certifications} />
+              <hr />
+              <CourseInfo data={resumeData.courses} />
+              <hr />
+              <ProjectInfo data={resumeData.projects} />
+              <hr />
+              <HobbyInfo data={resumeData.hobbies} />
+            </div>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 }

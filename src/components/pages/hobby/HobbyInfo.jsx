@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 
-export default function Hobbies(props) {
+export default function HobbyInfo(props) {
   return (
     <div>
       <Container>

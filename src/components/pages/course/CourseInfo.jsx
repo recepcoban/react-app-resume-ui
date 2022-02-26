@@ -1,29 +1,22 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 
-export default function Projects(props) {
+export default function CourseInfo(props) {
   return (
     <div>
       <Container>
-        <h4>Project</h4>
+        <h4>Course</h4>
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {
             return (
               <Row key={item.id}>
                 <Col>
-                  <div>
-                    <h6>{item.name}</h6>
-                  </div>
-                  <div className="text-muted">{item.details}</div>
+                  <div>{item.name}</div>
                   <div className="invisible">{item.userId}</div>
                 </Col>
                 <Col>
-                  <div className="text-end">
-                    <a href={item.url} className="text-muted">
-                      {item.url}
-                    </a>
-                  </div>
+                  <div className="text-muted text-end">{item.provider}</div>
                 </Col>
               </Row>
             );

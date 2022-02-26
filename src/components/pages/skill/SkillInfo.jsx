@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Progress } from "reactstrap";
 
-export default function Skills(props) {
+export default function SkillInfo(props) {
   const getLevel = (level) => {
     switch (level) {
       case "BEGINNER":
