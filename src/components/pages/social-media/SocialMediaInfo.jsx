@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Container, Row, Col, UncontrolledTooltip } from "reactstrap";
 
 export default function SocialMediaInfo(props) {
   const getIcon = (type) => {
@@ -19,7 +20,23 @@ export default function SocialMediaInfo(props) {
 
   return (
     <Container>
-      <h4>Social Media</h4>
+      <Row>
+        <Col>
+          <h4>Social Media</h4>
+        </Col>
+        <Col className="text-end">
+          <Link to="/social-media">
+            <h4>
+              <i id="new" className="bi bi-plus-square text-info"></i>
+            </h4>
+          </Link>
+          <UncontrolledTooltip placement="top" target="new">
+            New!
+          </UncontrolledTooltip>
+        </Col>
+        <hr />
+      </Row>
+
       {props.data &&
         props.data.length > 0 &&
         props.data.map((item) => {
@@ -30,6 +47,14 @@ export default function SocialMediaInfo(props) {
                 <a href={item.url} className="text-dark">
                   {item.url}
                 </a>
+              </Col>
+              <Col className="text-end">
+                <Link to="/social-media" tooltip="edit">
+                  <i id="edit" className="bi bi-pencil-square text-info"></i>
+                </Link>
+                <UncontrolledTooltip placement="top" target="edit">
+                  Edit!
+                </UncontrolledTooltip>
               </Col>
             </Row>
           );

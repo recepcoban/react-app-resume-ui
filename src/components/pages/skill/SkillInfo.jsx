@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Row, Col, Progress } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Container, Row, Col, Progress, UncontrolledTooltip } from "reactstrap";
 
 export default function SkillInfo(props) {
   const getLevel = (level) => {
@@ -24,7 +25,23 @@ export default function SkillInfo(props) {
   return (
     <div>
       <Container>
-        <h4>Skill Set</h4>
+        <Row>
+          <Col>
+            <h4>Skill Set</h4>
+          </Col>
+          <Col className="text-end">
+            <Link to="/skill">
+              <h4>
+                <i id="new" className="bi bi-plus-square text-info"></i>
+              </h4>
+            </Link>
+            <UncontrolledTooltip placement="top" target="new">
+              New!
+            </UncontrolledTooltip>
+          </Col>
+          <hr />
+        </Row>
+
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {

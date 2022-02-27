@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Button,
   Container,
@@ -84,11 +84,11 @@ export default function Home() {
         </Col>
         <Col sm="3" md="4" lg="6" className="text-end">
           <br />
-          <NavLink to="/user">
+          <Link to="/user">
             <Button outline color="info">
               New Resume
             </Button>
-          </NavLink>
+          </Link>
         </Col>
       </Row>
       <hr />
@@ -97,23 +97,23 @@ export default function Home() {
           {resumeData && resumeData.user && (
             <div>
               <UserInfo data={resumeData.user} />
-              <hr />
+              <br />
               <SocialMediaInfo data={resumeData.socialMedias} />
-              <hr />
+              <br />
               <EducationInfo data={resumeData.educations} />
-              <hr />
+              <br />
               <ExperienceInfo data={resumeData.experiences} />
-              <hr />
+              <br />
               <SkillInfo data={resumeData.skills} />
-              <hr />
+              <br />
               <LanguageInfo data={resumeData.languages} />
-              <hr />
+              <br />
               <CertificationInfo data={resumeData.certifications} />
-              <hr />
+              <br />
               <CourseInfo data={resumeData.courses} />
-              <hr />
+              <br />
               <ProjectInfo data={resumeData.projects} />
-              <hr />
+              <br />
               <HobbyInfo data={resumeData.hobbies} />
             </div>
           )}

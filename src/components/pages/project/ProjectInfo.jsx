@@ -1,11 +1,28 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Container, Row, Col, UncontrolledTooltip } from "reactstrap";
 
 export default function ProjectInfo(props) {
   return (
     <div>
       <Container>
-        <h4>Project</h4>
+        <Row>
+          <Col>
+            <h4>Project</h4>
+          </Col>
+          <Col className="text-end">
+            <Link to="/project">
+              <h4>
+                <i id="new" className="bi bi-plus-square text-info"></i>
+              </h4>
+            </Link>
+            <UncontrolledTooltip placement="top" target="new">
+              New!
+            </UncontrolledTooltip>
+          </Col>
+          <hr />
+        </Row>
+
         {props.data &&
           props.data.length > 0 &&
           props.data.map((item) => {

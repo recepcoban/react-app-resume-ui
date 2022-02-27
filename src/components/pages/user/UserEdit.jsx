@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Button,
   Container,
@@ -38,7 +38,8 @@ export default function UserEdit(props) {
   async function createNewUser(user) {
     const userResponse = await createUser(user);
     if (!userResponse.isAxiosError) {
-      props.userCallback(user.email);
+      //props.userCallback(user.email);
+      setError(userResponse.data.message);
     } else {
       setError(userResponse.response.data.message);
     }
@@ -138,9 +139,9 @@ export default function UserEdit(props) {
                     </Button>
                   </Col>
                   <Col className="text-end">
-                    <NavLink to="/">
+                    <Link to="/">
                       <Button color="danger">Cancel</Button>
-                    </NavLink>
+                    </Link>
                   </Col>
                 </Row>
               </Form>
@@ -150,12 +151,10 @@ export default function UserEdit(props) {
       </Row>
       <Row>
         <Col>
-          <div className="text-danger text-center">
-            <p>
-              <br />
-              {error && error.code + " - " + error.text}
-            </p>
-          </div>
+          <p className="text-danger text-center">
+            <br />
+            {error && error.code + " - " + error.text}
+          </p>
         </Col>
       </Row>
     </Container>
