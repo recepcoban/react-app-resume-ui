@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getLanguageById } from "../../api/LanguageApi";
 
-export default function LanguageEdit(props) {
+export default function LanguageEdit() {
+  const { id } = useParams();
+  const [languageData, setLanguageData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getLanguageInfoById();
+    }
+  }, []);
+
+  async function getLanguageInfoById() {
+    const languageResponse = await getLanguageById(id);
+    if (!languageResponse.isAxiosError) {
+      setLanguageData(languageResponse.data);
+      setError(null);
+    } else {
+      setLanguageData(null);
+      setError(languageResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -35,12 +55,18 @@ export default function LanguageEdit(props) {
                     id="name"
                     name="name"
                     placeholder="Type your language"
+                    value={languageData && languageData.language.name}
                   />
                 </FormGroup>
                 <br />
                 <FormGroup>
                   <Label for="level">Level</Label>
-                  <Input id="level" name="level" type="select">
+                  <Input
+                    id="level"
+                    name="level"
+                    type="select"
+                    value={languageData && languageData.language.level}
+                  >
                     <option className="text-muted">
                       Choose your language level
                     </option>
@@ -55,13 +81,16 @@ export default function LanguageEdit(props) {
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

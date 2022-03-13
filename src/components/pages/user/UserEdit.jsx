@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,10 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
-import createUser from "../../api/UserApi";
+import { getUserById, createUser } from "../../api/UserApi";
 
-export default function UserEdit(props) {
+export default function UserEdit() {
+  const { id } = useParams();
+  const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getUserInfoById();
+    }
+  }, []);
+
+  async function getUserInfoById() {
+    const userResponse = await getUserById(id);
+    if (!userResponse.isAxiosError) {
+      setUserData(userResponse.data);
+      setError(null);
+    } else {
+      setUserData(null);
+      setError(userResponse.response.data.message);
+    }
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -64,6 +83,7 @@ export default function UserEdit(props) {
                     name="email"
                     placeholder="Type your valid email"
                     type="email"
+                    value={userData && userData.user.email}
                   />
                 </FormGroup>
                 <br />
@@ -73,6 +93,7 @@ export default function UserEdit(props) {
                     id="fullName"
                     name="fullName"
                     placeholder="Type your full name"
+                    value={userData && userData.user.fullName}
                   />
                 </FormGroup>
                 <br />
@@ -82,6 +103,7 @@ export default function UserEdit(props) {
                     id="title"
                     name="title"
                     placeholder="Type your title"
+                    value={userData && userData.user.title}
                   />
                 </FormGroup>
                 <br />
@@ -91,6 +113,7 @@ export default function UserEdit(props) {
                     id="employer"
                     name="employer"
                     placeholder="Type your employer"
+                    value={userData && userData.user.employer}
                   />
                 </FormGroup>
                 <br />
@@ -101,6 +124,7 @@ export default function UserEdit(props) {
                     name="birthDate"
                     placeholder="Birth Date"
                     type="date"
+                    value={userData && userData.user.birthDate}
                   />
                 </FormGroup>
                 <br />
@@ -110,6 +134,7 @@ export default function UserEdit(props) {
                     id="phone"
                     name="phone"
                     placeholder="Type your phone"
+                    value={userData && userData.user.phone}
                   />
                 </FormGroup>
                 <br />
@@ -119,6 +144,7 @@ export default function UserEdit(props) {
                     id="location"
                     name="location"
                     placeholder="Type your location"
+                    value={userData && userData.user.location}
                   />
                 </FormGroup>
                 <br />
@@ -128,19 +154,24 @@ export default function UserEdit(props) {
                     id="summary"
                     name="summary"
                     type="textarea"
+                    rows="5"
                     placeholder="Type your summary"
+                    value={userData && userData.user.summary}
                   />
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

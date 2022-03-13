@@ -39,7 +39,16 @@ export default function ProjectInfo(props) {
                   <div className="text-end">
                     <a href={item.url} className="text-muted">
                       {item.url}
-                    </a>
+                    </a>{" "}
+                    <Link to={`/project/${item.id}`} tooltip="edit">
+                      <i
+                        id="edit"
+                        className="bi bi-pencil-square text-info"
+                      ></i>
+                    </Link>
+                    <UncontrolledTooltip placement="top" target="edit">
+                      Edit!
+                    </UncontrolledTooltip>
                   </div>
                 </Col>
               </Row>

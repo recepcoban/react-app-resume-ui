@@ -51,7 +51,13 @@ export default function ExperienceInfo(props) {
                           year: "numeric",
                           month: "long",
                           //day: "2-digit",
-                        }).format(new Date(item.endDate)))}
+                        }).format(new Date(item.endDate)))}{" "}
+                  <Link to={`/experience/${item.id}`} tooltip="edit">
+                    <i id="edit" className="bi bi-pencil-square text-info"></i>
+                  </Link>
+                  <UncontrolledTooltip placement="top" target="edit">
+                    Edit!
+                  </UncontrolledTooltip>
                 </div>
               </Col>
             </Row>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getSkillById } from "../../api/SkillApi";
 
-export default function SkillEdit(props) {
+export default function SkillEdit() {
+  const { id } = useParams();
+  const [skillData, setSkillData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getSkillInfoById();
+    }
+  }, []);
+
+  async function getSkillInfoById() {
+    const skillResponse = await getSkillById(id);
+    if (!skillResponse.isAxiosError) {
+      setSkillData(skillResponse.data);
+      setError(null);
+    } else {
+      setSkillData(null);
+      setError(skillResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -31,33 +51,48 @@ export default function SkillEdit(props) {
               <Form>
                 <FormGroup>
                   <Label for="name">Name</Label>
-                  <Input id="name" name="name" placeholder="Type your skill" />
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="Type your skill"
+                    value={skillData && skillData.skill.name}
+                  />
                 </FormGroup>
                 <br />
                 <FormGroup>
                   <Label for="level">Level</Label>
-                  <Input id="level" name="level" type="select">
+                  <Input
+                    id="level"
+                    name="level"
+                    type="select"
+                    value={skillData && skillData.skill.level}
+                  >
                     <option className="text-muted">
                       Choose your skill level
                     </option>
-                    <option>BEGINNER</option>
-                    <option>ELEMENTARY</option>
-                    <option>INTERMEDIATE</option>
-                    <option>UPPER INTERMEDIATE</option>
-                    <option>ADVANCED</option>
-                    <option>PROFICIENT</option>
+                    <option value="BEGINNER">BEGINNER</option>
+                    <option value="ELEMENTARY">ELEMENTARY</option>
+                    <option value="INTERMEDIATE">INTERMEDIATE</option>
+                    <option value="UPPER_INTERMEDIATE">
+                      UPPER INTERMEDIATE
+                    </option>
+                    <option value="ADVANCED">ADVANCED</option>
+                    <option value="PROFICIENT">PROFICIENT</option>
                   </Input>
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

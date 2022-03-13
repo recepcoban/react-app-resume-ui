@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getEducationById } from "../../api/EducationApi";
 
-export default function EducationEdit(props) {
+export default function EducationEdit() {
+  const { id } = useParams();
+  const [educationData, setEducationData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getEducationInfoById();
+    }
+  }, []);
+
+  async function getEducationInfoById() {
+    const educationResponse = await getEducationById(id);
+    if (!educationResponse.isAxiosError) {
+      setEducationData(educationResponse.data);
+      setError(null);
+    } else {
+      setEducationData(null);
+      setError(educationResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -35,6 +55,7 @@ export default function EducationEdit(props) {
                     id="schoolName"
                     name="schoolName"
                     placeholder="Type your school name"
+                    value={educationData && educationData.education.schoolName}
                   />
                 </FormGroup>
                 <br />
@@ -44,6 +65,9 @@ export default function EducationEdit(props) {
                     id="departmentName"
                     name="departmentName"
                     placeholder="Type your department"
+                    value={
+                      educationData && educationData.education.departmentName
+                    }
                   />
                 </FormGroup>
                 <br />
@@ -56,6 +80,9 @@ export default function EducationEdit(props) {
                         name="startDate"
                         placeholder="Start Date"
                         type="date"
+                        value={
+                          educationData && educationData.education.startDate
+                        }
                       />
                     </FormGroup>
                   </Col>
@@ -67,6 +94,11 @@ export default function EducationEdit(props) {
                         name="endDate"
                         placeholder="End Date"
                         type="date"
+                        value={
+                          educationData &&
+                          !educationData.education.active &&
+                          educationData.education.endDate
+                        }
                       />
                     </FormGroup>
                   </Col>
@@ -75,7 +107,14 @@ export default function EducationEdit(props) {
                   <Col></Col>
                   <Col>
                     <FormGroup check>
-                      <Input id="present" name="present" type="checkbox" />
+                      <Input
+                        id="present"
+                        name="present"
+                        type="checkbox"
+                        checked={
+                          educationData && educationData.education.active
+                        }
+                      />
                       <Label for="present" check>
                         Present
                       </Label>
@@ -85,13 +124,16 @@ export default function EducationEdit(props) {
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

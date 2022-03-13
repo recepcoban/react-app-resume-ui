@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getProjectById } from "../../api/ProjectApi";
 
-export default function ProjectEdit(props) {
+export default function ProjectEdit() {
+  const { id } = useParams();
+  const [projectData, setProjectData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getProjectInfoById();
+    }
+  }, []);
+
+  async function getProjectInfoById() {
+    const projectResponse = await getProjectById(id);
+    if (!projectResponse.isAxiosError) {
+      setProjectData(projectResponse.data);
+      setError(null);
+    } else {
+      setProjectData(null);
+      setError(projectResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -35,6 +55,7 @@ export default function ProjectEdit(props) {
                     id="name"
                     name="name"
                     placeholder="Type your project name"
+                    value={projectData && projectData.project.name}
                   />
                 </FormGroup>
                 <br />
@@ -44,6 +65,7 @@ export default function ProjectEdit(props) {
                     id="url"
                     name="url"
                     placeholder="Type your project address"
+                    value={projectData && projectData.project.url}
                   />
                 </FormGroup>
                 <br />
@@ -53,19 +75,24 @@ export default function ProjectEdit(props) {
                     id="details"
                     name="details"
                     type="textarea"
+                    rows="5"
                     placeholder="Type your project details"
+                    value={projectData && projectData.project.details}
                   />
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

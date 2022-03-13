@@ -31,7 +31,13 @@ export default function HobbyInfo(props) {
                 <Col key={item.id} className="text-center">
                   <span className="badge rounded-pill bg-secondary text-light">
                     {item.name}
-                  </span>
+                  </span>{" "}
+                  <Link to={`/hobby/${item.id}`} tooltip="edit">
+                    <i id="edit" className="bi bi-pencil-square text-info"></i>
+                  </Link>
+                  <UncontrolledTooltip placement="top" target="edit">
+                    Edit!
+                  </UncontrolledTooltip>
                 </Col>
               );
             })}

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getHobbyById } from "../../api/HobbyApi";
 
-export default function HobbyEdit(props) {
+export default function HobbyEdit() {
+  const { id } = useParams();
+  const [hobbyData, setHobbyData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getHobbyInfoById();
+    }
+  }, []);
+
+  async function getHobbyInfoById() {
+    const hobbyResponse = await getHobbyById(id);
+    if (!hobbyResponse.isAxiosError) {
+      setHobbyData(hobbyResponse.data);
+      setError(null);
+    } else {
+      setHobbyData(null);
+      setError(hobbyResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -31,18 +51,26 @@ export default function HobbyEdit(props) {
               <Form>
                 <FormGroup>
                   <Label for="name">Name</Label>
-                  <Input id="name" name="name" placeholder="Type your hobby" />
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="Type your hobby"
+                    value={hobbyData && hobbyData.hobby.name}
+                  />
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

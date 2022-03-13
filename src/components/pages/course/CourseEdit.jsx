@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getCourseById } from "../../api/CourseApi";
 
-export default function CourseEdit(props) {
+export default function CourseEdit() {
+  const { id } = useParams();
+  const [courseData, setCourseData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getCourseInfoById();
+    }
+  }, []);
+
+  async function getCourseInfoById() {
+    const courseResponse = await getCourseById(id);
+    if (!courseResponse.isAxiosError) {
+      setCourseData(courseResponse.data);
+      setError(null);
+    } else {
+      setCourseData(null);
+      setError(courseResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -35,6 +55,7 @@ export default function CourseEdit(props) {
                     id="name"
                     name="name"
                     placeholder="Type your course name"
+                    value={courseData && courseData.course.name}
                   />
                 </FormGroup>
                 <br />
@@ -44,18 +65,22 @@ export default function CourseEdit(props) {
                     id="provider"
                     name="provider"
                     placeholder="Type your course provider"
+                    value={courseData && courseData.course.provider}
                   />
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

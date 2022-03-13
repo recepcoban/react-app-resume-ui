@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getExperienceById } from "../../api/ExperienceApi";
 
-export default function ExperienceEdit(props) {
+export default function ExperienceEdit() {
+  const { id } = useParams();
+  const [experienceData, setExperienceData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getExperienceInfoById();
+    }
+  }, []);
+
+  async function getExperienceInfoById() {
+    const experienceResponse = await getExperienceById(id);
+    if (!experienceResponse.isAxiosError) {
+      setExperienceData(experienceResponse.data);
+      setError(null);
+    } else {
+      setExperienceData(null);
+      setError(experienceResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -35,6 +55,7 @@ export default function ExperienceEdit(props) {
                     id="employer"
                     name="employer"
                     placeholder="Type your employer"
+                    value={experienceData && experienceData.experience.employer}
                   />
                 </FormGroup>
                 <br />
@@ -44,6 +65,7 @@ export default function ExperienceEdit(props) {
                     id="position"
                     name="position"
                     placeholder="Type your position"
+                    value={experienceData && experienceData.experience.position}
                   />
                 </FormGroup>
                 <br />
@@ -53,6 +75,7 @@ export default function ExperienceEdit(props) {
                     id="url"
                     name="url"
                     placeholder="Type your employer address"
+                    value={experienceData && experienceData.experience.url}
                   />
                 </FormGroup>
                 <br />
@@ -65,6 +88,9 @@ export default function ExperienceEdit(props) {
                         name="startDate"
                         placeholder="Start Date"
                         type="date"
+                        value={
+                          experienceData && experienceData.experience.startDate
+                        }
                       />
                     </FormGroup>
                   </Col>
@@ -76,6 +102,11 @@ export default function ExperienceEdit(props) {
                         name="endDate"
                         placeholder="End Date"
                         type="date"
+                        value={
+                          experienceData &&
+                          !experienceData.experience.active &&
+                          experienceData.experience.endDate
+                        }
                       />
                     </FormGroup>
                   </Col>
@@ -84,7 +115,14 @@ export default function ExperienceEdit(props) {
                   <Col></Col>
                   <Col>
                     <FormGroup check>
-                      <Input id="present" name="present" type="checkbox" />
+                      <Input
+                        id="present"
+                        name="present"
+                        type="checkbox"
+                        checked={
+                          experienceData && experienceData.experience.active
+                        }
+                      />
                       <Label for="present" check>
                         Present
                       </Label>
@@ -98,19 +136,27 @@ export default function ExperienceEdit(props) {
                     id="responsibilities"
                     name="responsibilities"
                     type="textarea"
+                    rows="5"
                     placeholder="Type your responsibilities"
+                    value={
+                      experienceData &&
+                      experienceData.experience.responsibilities
+                    }
                   />
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

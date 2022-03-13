@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getCertificationById } from "../../api/CertificationApi";
 
-export default function CertificationEdit(props) {
+export default function CertificationEdit() {
+  const { id } = useParams();
+  const [certificationData, setCertificationData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getCertificationInfoById();
+    }
+  }, []);
+
+  async function getCertificationInfoById() {
+    const certificationResponse = await getCertificationById(id);
+    if (!certificationResponse.isAxiosError) {
+      setCertificationData(certificationResponse.data);
+      setError(null);
+    } else {
+      setCertificationData(null);
+      setError(certificationResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -35,6 +55,9 @@ export default function CertificationEdit(props) {
                     id="name"
                     name="name"
                     placeholder="Type your certification name"
+                    value={
+                      certificationData && certificationData.certification.name
+                    }
                   />
                 </FormGroup>
                 <br />
@@ -44,6 +67,10 @@ export default function CertificationEdit(props) {
                     id="provider"
                     name="provider"
                     placeholder="Type your certification provider"
+                    value={
+                      certificationData &&
+                      certificationData.certification.provider
+                    }
                   />
                 </FormGroup>
                 <br />
@@ -53,18 +80,24 @@ export default function CertificationEdit(props) {
                     id="url"
                     name="url"
                     placeholder="Type your certification address"
+                    value={
+                      certificationData && certificationData.certification.url
+                    }
                   />
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

@@ -49,7 +49,7 @@ export default function SocialMediaInfo(props) {
                 </a>
               </Col>
               <Col className="text-end">
-                <Link to="/social-media" tooltip="edit">
+                <Link to={`/social-media/${item.id}`} tooltip="edit">
                   <i id="edit" className="bi bi-pencil-square text-info"></i>
                 </Link>
                 <UncontrolledTooltip placement="top" target="edit">

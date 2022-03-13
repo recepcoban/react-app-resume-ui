@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,9 +13,29 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import { getSocialMediaById } from "../../api/SocialMediaApi";
 
 export default function SocialMediaEdit(props) {
+  const { id } = useParams();
+  const [socialMediaData, setSocialMediaData] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getSocialMediaInfoById();
+    }
+  }, []);
+
+  async function getSocialMediaInfoById() {
+    const socialMediaResponse = await getSocialMediaById(id);
+    if (!socialMediaResponse.isAxiosError) {
+      setSocialMediaData(socialMediaResponse.data);
+      setError(null);
+    } else {
+      setSocialMediaData(null);
+      setError(socialMediaResponse.response.data.message);
+    }
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -35,18 +55,23 @@ export default function SocialMediaEdit(props) {
               <Form onSubmit={onSubmit}>
                 <FormGroup>
                   <Label for="type">Type</Label>
-                  <Input id="type" name="type" type="select">
+                  <Input
+                    id="type"
+                    name="type"
+                    type="select"
+                    value={socialMediaData && socialMediaData.socialMedia.type}
+                  >
                     <option className="text-muted">
                       Choose your account type
                     </option>
-                    <option>LINKEDIN</option>
-                    <option>SKYPE</option>
-                    <option>FACEBOOK</option>
-                    <option>GITHUB</option>
-                    <option>INSTAGRAM</option>
-                    <option>TWITTER</option>
-                    <option>YOUTUBE</option>
-                    <option>HACKERRANK</option>
+                    <option value="LINKEDIN">LINKEDIN</option>
+                    <option value="SKYPE">SKYPE</option>
+                    <option value="FACEBOOK">FACEBOOK</option>
+                    <option value="GITHUB">GITHUB</option>
+                    <option value="INSTAGRAM">INSTAGRAM</option>
+                    <option value="TWITTER">TWITTER</option>
+                    <option value="YOUTUBE">YOUTUBE</option>
+                    <option value="HACKERRANK">HACKERRANK</option>
                   </Input>
                 </FormGroup>
                 <br />
@@ -56,18 +81,22 @@ export default function SocialMediaEdit(props) {
                     id="url"
                     name="url"
                     placeholder="Type your account address"
+                    value={socialMediaData && socialMediaData.socialMedia.url}
                   />
                 </FormGroup>
                 <br />
                 <Row>
                   <Col>
-                    <Button color="success" type="submit">
-                      Save
-                    </Button>
+                    <Link to="/">
+                      <Button color="primary">Home</Button>
+                    </Link>
                   </Col>
                   <Col className="text-end">
+                    <Button color="success" type="submit">
+                      Save
+                    </Button>{" "}
                     <Link to="/">
-                      <Button color="danger">Cancel</Button>
+                      <Button color="danger">Delete</Button>
                     </Link>
                   </Col>
                 </Row>

@@ -51,7 +51,18 @@ export default function LanguageInfo(props) {
                   <div>{item.name}</div>
                 </Col>
                 <Col>
-                  <Progress color="info" value={getLevel(item.level)} />
+                  <div className="text-end">
+                    <Progress color="info" value={getLevel(item.level)} />
+                    <Link to={`/language/${item.id}`} tooltip="edit">
+                      <i
+                        id="edit"
+                        className="bi bi-pencil-square text-info"
+                      ></i>
+                    </Link>
+                    <UncontrolledTooltip placement="top" target="edit">
+                      Edit!
+                    </UncontrolledTooltip>
+                  </div>
                 </Col>
               </Row>
             );

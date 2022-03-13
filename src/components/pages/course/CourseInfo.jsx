@@ -33,7 +33,18 @@ export default function CourseInfo(props) {
                   <div className="invisible">{item.userId}</div>
                 </Col>
                 <Col>
-                  <div className="text-muted text-end">{item.provider}</div>
+                  <div className="text-muted text-end">
+                    {item.provider}{" "}
+                    <Link to={`/course/${item.id}`} tooltip="edit">
+                      <i
+                        id="edit"
+                        className="bi bi-pencil-square text-info"
+                      ></i>
+                    </Link>
+                    <UncontrolledTooltip placement="top" target="edit">
+                      Edit!
+                    </UncontrolledTooltip>
+                  </div>
                 </Col>
               </Row>
             );
