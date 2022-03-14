@@ -30,7 +30,7 @@ export default function LanguageInfo(props) {
             <h4>Language</h4>
           </Col>
           <Col className="text-end">
-            <Link to="/language">
+            <Link to="/language" state={{ userId: props.userId }}>
               <h4>
                 <i id="new" className="bi bi-plus-square text-info"></i>
               </h4>
@@ -53,7 +53,11 @@ export default function LanguageInfo(props) {
                 <Col>
                   <div className="text-end">
                     <Progress color="info" value={getLevel(item.level)} />
-                    <Link to={`/language/${item.id}`} tooltip="edit">
+                    <Link
+                      to={`/language/${item.id}`}
+                      state={{ userId: item.userId }}
+                      tooltip="edit"
+                    >
                       <i
                         id="edit"
                         className="bi bi-pencil-square text-info"

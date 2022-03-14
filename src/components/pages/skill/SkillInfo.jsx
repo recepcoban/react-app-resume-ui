@@ -30,7 +30,7 @@ export default function SkillInfo(props) {
             <h4>Skill Set</h4>
           </Col>
           <Col className="text-end">
-            <Link to="/skill">
+            <Link to="/skill" state={{ userId: props.userId }}>
               <h4>
                 <i id="new" className="bi bi-plus-square text-info"></i>
               </h4>
@@ -53,7 +53,11 @@ export default function SkillInfo(props) {
                 <Col>
                   <div className="text-end">
                     <Progress color="info" value={getLevel(item.level)} />{" "}
-                    <Link to={`/skill/${item.id}`} tooltip="edit">
+                    <Link
+                      to={`/skill/${item.id}`}
+                      state={{ userId: item.userId }}
+                      tooltip="edit"
+                    >
                       <i
                         id="edit"
                         className="bi bi-pencil-square text-info"

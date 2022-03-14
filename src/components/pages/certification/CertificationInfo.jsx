@@ -11,7 +11,7 @@ export default function CertificationInfo(props) {
             <h4>Certification</h4>
           </Col>
           <Col className="text-end">
-            <Link to="/certification">
+            <Link to="/certification" state={{ userId: props.userId }}>
               <h4>
                 <i id="new" className="bi bi-plus-square text-info"></i>
               </h4>
@@ -38,7 +38,11 @@ export default function CertificationInfo(props) {
                     <a href={item.url} className="text-muted">
                       {item.url}
                     </a>{" "}
-                    <Link to={`/certification/${item.id}`} tooltip="edit">
+                    <Link
+                      to={`/certification/${item.id}`}
+                      state={{ userId: item.userId }}
+                      tooltip="edit"
+                    >
                       <i
                         id="edit"
                         className="bi bi-pencil-square text-info"

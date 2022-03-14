@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -17,6 +17,9 @@ import { getLanguageById } from "../../api/LanguageApi";
 
 export default function LanguageEdit() {
   const { id } = useParams();
+  const location = useLocation();
+  const { userId } = location.state;
+
   const [languageData, setLanguageData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -37,6 +40,10 @@ export default function LanguageEdit() {
     }
   }
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Container>
       <br />
@@ -48,7 +55,7 @@ export default function LanguageEdit() {
               Create New Language
             </CardTitle>
             <CardText>
-              <Form>
+              <Form onSubmit={onSubmit}>
                 <FormGroup>
                   <Label for="name">Name</Label>
                   <Input

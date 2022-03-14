@@ -57,7 +57,6 @@ export default function UserEdit() {
   async function createNewUser(user) {
     const userResponse = await createUser(user);
     if (!userResponse.isAxiosError) {
-      //props.userCallback(user.email);
       setError(userResponse.data.message);
     } else {
       setError(userResponse.response.data.message);

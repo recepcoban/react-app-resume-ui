@@ -11,7 +11,7 @@ export default function HobbyInfo(props) {
             <h4>Hobby</h4>
           </Col>
           <Col className="text-end">
-            <Link to="/hobby">
+            <Link to="/hobby" state={{ userId: props.userId }}>
               <h4>
                 <i id="new" className="bi bi-plus-square text-info"></i>
               </h4>
@@ -32,7 +32,11 @@ export default function HobbyInfo(props) {
                   <span className="badge rounded-pill bg-secondary text-light">
                     {item.name}
                   </span>{" "}
-                  <Link to={`/hobby/${item.id}`} tooltip="edit">
+                  <Link
+                    to={`/hobby/${item.id}`}
+                    state={{ userId: item.userId }}
+                    tooltip="edit"
+                  >
                     <i id="edit" className="bi bi-pencil-square text-info"></i>
                   </Link>
                   <UncontrolledTooltip placement="top" target="edit">

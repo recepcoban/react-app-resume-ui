@@ -11,7 +11,7 @@ export default function ProjectInfo(props) {
             <h4>Project</h4>
           </Col>
           <Col className="text-end">
-            <Link to="/project">
+            <Link to="/project" state={{ userId: props.userId }}>
               <h4>
                 <i id="new" className="bi bi-plus-square text-info"></i>
               </h4>
@@ -40,7 +40,11 @@ export default function ProjectInfo(props) {
                     <a href={item.url} className="text-muted">
                       {item.url}
                     </a>{" "}
-                    <Link to={`/project/${item.id}`} tooltip="edit">
+                    <Link
+                      to={`/project/${item.id}`}
+                      state={{ userId: item.userId }}
+                      tooltip="edit"
+                    >
                       <i
                         id="edit"
                         className="bi bi-pencil-square text-info"

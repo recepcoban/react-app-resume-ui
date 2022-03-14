@@ -25,7 +25,7 @@ export default function SocialMediaInfo(props) {
           <h4>Social Media</h4>
         </Col>
         <Col className="text-end">
-          <Link to="/social-media">
+          <Link to="/social-media" state={{ userId: props.userId }}>
             <h4>
               <i id="new" className="bi bi-plus-square text-info"></i>
             </h4>
@@ -49,7 +49,11 @@ export default function SocialMediaInfo(props) {
                 </a>
               </Col>
               <Col className="text-end">
-                <Link to={`/social-media/${item.id}`} tooltip="edit">
+                <Link
+                  to={`/social-media/${item.id}`}
+                  state={{ userId: item.userId }}
+                  tooltip="edit"
+                >
                   <i id="edit" className="bi bi-pencil-square text-info"></i>
                 </Link>
                 <UncontrolledTooltip placement="top" target="edit">

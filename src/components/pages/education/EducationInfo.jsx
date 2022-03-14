@@ -10,7 +10,7 @@ export default function EducationInfo(props) {
           <h4>Education</h4>
         </Col>
         <Col className="text-end">
-          <Link to="/education">
+          <Link to="/education" state={{ userId: props.userId }}>
             <h4>
               <i id="new" className="bi bi-plus-square text-info"></i>
             </h4>
@@ -49,7 +49,11 @@ export default function EducationInfo(props) {
                           month: "long",
                           //day: "2-digit",
                         }).format(new Date(item.endDate)))}{" "}
-                  <Link to={`/education/${item.id}`} tooltip="edit">
+                  <Link
+                    to={`/education/${item.id}`}
+                    state={{ userId: item.userId }}
+                    tooltip="edit"
+                  >
                     <i id="edit" className="bi bi-pencil-square text-info"></i>
                   </Link>
                   <UncontrolledTooltip placement="top" target="edit">

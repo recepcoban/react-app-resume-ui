@@ -38,7 +38,8 @@ export async function createUser(user) {
 
 export async function updateUser(user) {
   return await axios
-    .post(Constants.ROOT_PATH + Constants.USER_PATH, {
+    .put(Constants.ROOT_PATH + Constants.USER_PATH, {
+      id: user.id,
       email: user.email,
       fullName: user.fullName,
       title: user.title,
@@ -48,6 +49,19 @@ export async function updateUser(user) {
       location: user.location,
       summary: user.summary,
     })
+    .then((response) => {
+      console.log(response.data);
+      return response;
+    })
+    .catch((error) => {
+      console.log(error.response.data.message);
+      return error;
+    });
+}
+
+export async function deleteUser(id) {
+  return await axios
+    .delete(Constants.ROOT_PATH + Constants.USER_PATH + "/" + id)
     .then((response) => {
       console.log(response.data);
       return response;

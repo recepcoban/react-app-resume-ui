@@ -98,23 +98,47 @@ export default function Home() {
             <div>
               <UserInfo data={resumeData.user} />
               <br />
-              <SocialMediaInfo data={resumeData.socialMedias} />
+              <SocialMediaInfo
+                data={resumeData.socialMedias}
+                userId={resumeData.user.id}
+              />
               <br />
-              <EducationInfo data={resumeData.educations} />
+              <EducationInfo
+                data={resumeData.educations}
+                userId={resumeData.user.id}
+              />
               <br />
-              <ExperienceInfo data={resumeData.experiences} />
+              <ExperienceInfo
+                data={resumeData.experiences}
+                userId={resumeData.user.id}
+              />
               <br />
-              <SkillInfo data={resumeData.skills} />
+              <SkillInfo data={resumeData.skills} userId={resumeData.user.id} />
               <br />
-              <LanguageInfo data={resumeData.languages} />
+              <LanguageInfo
+                data={resumeData.languages}
+                userId={resumeData.user.id}
+              />
               <br />
-              <CertificationInfo data={resumeData.certifications} />
+              <CertificationInfo
+                data={resumeData.certifications}
+                userId={resumeData.user.id}
+              />
               <br />
-              <CourseInfo data={resumeData.courses} />
+              <CourseInfo
+                data={resumeData.courses}
+                userId={resumeData.user.id}
+              />
               <br />
-              <ProjectInfo data={resumeData.projects} />
+              <ProjectInfo
+                data={resumeData.projects}
+                userId={resumeData.user.id}
+              />
               <br />
-              <HobbyInfo data={resumeData.hobbies} />
+              <HobbyInfo
+                data={resumeData.hobbies}
+                userId={resumeData.user.id}
+              />
             </div>
           )}
         </Col>

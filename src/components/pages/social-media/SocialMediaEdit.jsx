@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -13,10 +13,18 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
-import { getSocialMediaById } from "../../api/SocialMediaApi";
+import {
+  getSocialMediaById,
+  createSocialMedia,
+  updateSocialMedia,
+  deleteSocialMedia,
+} from "../../api/SocialMediaApi";
 
-export default function SocialMediaEdit(props) {
+export default function SocialMediaEdit() {
   const { id } = useParams();
+  const location = useLocation();
+  const { userId } = location.state;
+
   const [socialMediaData, setSocialMediaData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -39,7 +47,47 @@ export default function SocialMediaEdit(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    let socialMedia = {
+      id: id,
+      userId: userId,
+      type: e.target.type.value,
+      url: e.target.url.value,
+    };
+
+    if (id) {
+      updateSocialMediaById(socialMedia);
+    } else {
+      createNewSocialMedia(socialMedia);
+    }
   };
+
+  async function createNewSocialMedia(socialMedia) {
+    const socialMediaResponse = await createSocialMedia(socialMedia);
+    if (!socialMediaResponse.isAxiosError) {
+      setError(socialMediaResponse.data.message);
+    } else {
+      setError(socialMediaResponse.response.data.message);
+    }
+  }
+
+  async function updateSocialMediaById(socialMedia) {
+    const socialMediaResponse = await updateSocialMedia(socialMedia);
+    if (!socialMediaResponse.isAxiosError) {
+      setError(socialMediaResponse.data.message);
+    } else {
+      setError(socialMediaResponse.response.data.message);
+    }
+  }
+
+  async function onDeleteSocialMedia() {
+    const socialMediaResponse = await deleteSocialMedia(id);
+    if (!socialMediaResponse.isAxiosError) {
+      setError(socialMediaResponse.data.message);
+    } else {
+      setError(socialMediaResponse.response.data.message);
+    }
+  }
 
   return (
     <Container>
@@ -95,9 +143,9 @@ export default function SocialMediaEdit(props) {
                     <Button color="success" type="submit">
                       Save
                     </Button>{" "}
-                    <Link to="/">
-                      <Button color="danger">Delete</Button>
-                    </Link>
+                    <Button color="danger" onClick={onDeleteSocialMedia}>
+                      Delete
+                    </Button>
                   </Col>
                 </Row>
               </Form>

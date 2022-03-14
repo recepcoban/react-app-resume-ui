@@ -11,7 +11,7 @@ export default function CourseInfo(props) {
             <h4>Course</h4>
           </Col>
           <Col className="text-end">
-            <Link to="/course">
+            <Link to="/course" state={{ userId: props.userId }}>
               <h4>
                 <i id="new" className="bi bi-plus-square text-info"></i>
               </h4>
@@ -35,7 +35,11 @@ export default function CourseInfo(props) {
                 <Col>
                   <div className="text-muted text-end">
                     {item.provider}{" "}
-                    <Link to={`/course/${item.id}`} tooltip="edit">
+                    <Link
+                      to={`/course/${item.id}`}
+                      state={{ userId: item.userId }}
+                      tooltip="edit"
+                    >
                       <i
                         id="edit"
                         className="bi bi-pencil-square text-info"

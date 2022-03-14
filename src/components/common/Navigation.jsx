@@ -31,10 +31,16 @@ export default function Navigation() {
               App Details
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem href="https://github.com/recepcoban/react-app-resume-ui">
+              <DropdownItem
+                href="https://github.com/recepcoban/react-app-resume-ui"
+                target="_blank"
+              >
                 UI App - Frontend
               </DropdownItem>
-              <DropdownItem href="https://github.com/recepcoban/spring-boot-resume-api">
+              <DropdownItem
+                href="https://github.com/recepcoban/spring-boot-resume-api"
+                target="_blank"
+              >
                 API - Backend
               </DropdownItem>
             </DropdownMenu>

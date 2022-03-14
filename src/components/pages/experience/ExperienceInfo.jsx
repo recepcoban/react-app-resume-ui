@@ -10,7 +10,7 @@ export default function ExperienceInfo(props) {
           <h4>Work Experience</h4>
         </Col>
         <Col className="text-end">
-          <Link to="/experience">
+          <Link to="/experience" state={{ userId: props.userId }}>
             <h4>
               <i id="new" className="bi bi-plus-square text-info"></i>
             </h4>
@@ -52,7 +52,11 @@ export default function ExperienceInfo(props) {
                           month: "long",
                           //day: "2-digit",
                         }).format(new Date(item.endDate)))}{" "}
-                  <Link to={`/experience/${item.id}`} tooltip="edit">
+                  <Link
+                    to={`/experience/${item.id}`}
+                    state={{ userId: item.userId }}
+                    tooltip="edit"
+                  >
                     <i id="edit" className="bi bi-pencil-square text-info"></i>
                   </Link>
                   <UncontrolledTooltip placement="top" target="edit">
